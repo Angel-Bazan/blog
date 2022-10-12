@@ -27,7 +27,7 @@ app.get('/api/blog', cors(), async (req, res) => {
 
 app.get('/api/join', cors(), async (req, res) => {
   try {
-    const { rows: blog } = await db.query('SELECT blog.title, blog.blurb, blog.content, users.firstName FROM blog LEFT JOIN users ON blog.users_id = users.id ORDER BY blog.id DESC');
+    const { rows: blog } = await db.query('SELECT blog.title, blog.blurb, blog.content, users.first_name, users.id AS users_id FROM blog LEFT JOIN users ON blog.users_id = users.id');
     res.send(blog);
   }catch (e) {
     return res.status(400).json({ e });

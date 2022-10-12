@@ -1,13 +1,15 @@
 import "./App.css";
-import Contacts from "./components/contacts";
-
+import { useState } from 'react';
+import Blogs from "./components/blogs";
+import Navbar from './components/navbar';
 
 
 function App() {
+  const [view, setView] = useState('blogs')
   return (
     <div className="App">
-     
-      <Contacts />
+     <Navbar setView={setView}/>
+     {view==='blogs'&& < Blogs />} 
     </div>
   );
 }
