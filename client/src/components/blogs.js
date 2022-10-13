@@ -8,7 +8,7 @@ const Blogs = () => {
   const [blurb, setBlurb] = useState("");
   const [content, setContent] = useState("");
   const [img, setImg] = useState("");
-  const [id, setId] = useState(-1); //by default you are not editing anything so id -1; 
+  const [id, setId] = useState(-1); //by default you are not editing anything so id -1;
 
   const addBlog = (newBlog) => {
     SetBlog((blog) => [...blog, newBlog]);
@@ -19,16 +19,18 @@ const Blogs = () => {
     });
 
     await getBlog();
+    console.log(deleteId)
   };
+
   const editBlog = async () => {
     await fetch(`${API_URL}/api/blog/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({title, blurb, content, img}),
+      body: JSON.stringify({ title, blurb, content, img }),
     });
 
     await getBlog();
-    setId(-1); //that is the function you call when you click the edit button and are done editing 
+    setId(-1); //that is the function you call when you click the edit button and are done editing
   };
 
   const getBlog = async () => {
@@ -49,6 +51,7 @@ const Blogs = () => {
           return (
             <li key={index} className="col col-sm-4 mb-3">
               <div className="card" style={{ width: "18rem" }}>
+                <img src={blog.img} className="card-img-top" alt="..."></img>
                 <div className="card-body">
                   <br />
                   <strong>Title:</strong>
@@ -59,17 +62,15 @@ const Blogs = () => {
                   <strong>Content:</strong>
                   {blog.content}
                   <br />
-                  <strong>img:</strong>
-                  {<img width='400px' src={blog.img} alt={blog.alt}></img>}
                   <br />
-                  <button 
+                  <button
                     className="btn btn-primary"
                     onClick={() => {
                       setTitle(blog.title);
                       setBlurb(blog.blurb);
                       setContent(blog.content);
                       setImg(blog.img);
-                      setId(blog.id) //This will update to a non negative id value 
+                      setId(blog.id); //This will update to a non negative id value
                     }}
                   >
                     Edit
@@ -89,8 +90,7 @@ const Blogs = () => {
           );
         })}
       </ul>
-      <div className ={ id=== -1 ? "d-none" : "d-block"}>
-        
+      <div className={id === -1 ? "d-none" : "d-block"}>
         <label htmlFor="edit-blog-title">Title</label>
         <input
           id="edit-blog-title"
@@ -127,7 +127,7 @@ const Blogs = () => {
         <label htmlFor="edit-blog-image">Image</label>
         <input
           id="edit-blog-image"
-          type="image"
+          type="text"
           value={img}
           onChange={(e) => {
             setImg(e.target.value);
@@ -135,8 +135,9 @@ const Blogs = () => {
         />{" "}
         <br />
         <br />
-        
-        <button className="btn btn-primary" onClick={editBlog}>Update User</button>
+        <button className="btn btn-primary" onClick={editBlog}>
+          Update User
+        </button>
       </div>
       <Form addBlog={addBlog} />
     </section>

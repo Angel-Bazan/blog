@@ -65,9 +65,9 @@ app.post('/api/blog', cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-app.delete('/api/blog/:blogId',  async (req, res) => {
-  const blogId = req.params.blogId;
-  console.log(contactId);
+app.delete('/api/blog/:id',  async (req, res) => {
+  const blogId = req.params.id; //It has to match 
+  console.log(blogId);
   try{
   await db.query('DELETE FROM blog WHERE id=$1', [blogId]);
   res.send({ status: "success" });
