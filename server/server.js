@@ -65,6 +65,21 @@ app.post('/api/blog', cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
+app.post('/api/favorite/:id', cors(), async (req, res) => {
+  const blogId = req.params.id;
+  const newFavorite = {
+    userId: req.body.users_id,
+    blog: req.body.blog_id,
+  };
+  console.log([newFavorite.userId, newFavorite.blog]);
+  const result = await db.query(
+    'INSERT INTO favorite_blogs(usersId, blog) VALUES($1, $2) RETURNING *',
+    [newFavorite.userId, newFavorite.blog],
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
 app.delete('/api/blog/:id',  async (req, res) => {
   const blogId = req.params.id; //It has to match 
   console.log(blogId);

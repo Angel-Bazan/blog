@@ -19,7 +19,15 @@ const Blogs = () => {
     });
 
     await getBlog();
-    console.log(deleteId)
+    console.log(deleteId);
+  };
+  const favoriteBlog = async (postId) => {
+    await fetch(`${API_URL}/api/blog/${postId}`, {
+      method: "POST",
+    });
+
+    await getBlog();
+    console.log(postId);
   };
 
   const editBlog = async () => {
@@ -82,6 +90,11 @@ const Blogs = () => {
                     >
                       Delete
                     </span>
+                  </button>
+                  <br />
+                  <button>
+                
+                    <span class="material-symbols-outlined" onClick={() => favoriteBlog(blog.id)}>favorite</span>
                   </button>
                   <br />
                 </div>
